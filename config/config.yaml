@@ -1,0 +1,34 @@
+# config/config.yaml
+
+notification:
+  mode: "wecom_app"
+  
+  wecom_app:
+    corpid: "ww8ad08364d2bc2a41"
+    
+    corpsecret: "lxLdKnrld4MkJK98fVENBRk-jzpM720gXD4UnxERUmI"
+    
+    # 3. 应用 AgentId (应用管理 -> 点击你的应用 -> AgentId)
+    agentid: 1000004
+    
+    # 4. 接收人 (填 "@all" 发给全员，或者填具体的 UserID，多个用 | 分隔)
+    touser: "@all"
+
+schedules:
+  times: ["10:00", "12:00", "14:30"]
+
+holdings:
+  - name: "纳斯达克100"
+    symbol_ref: "sh513100"
+    cost_price: 1.1500
+    shares: 10000
+
+  - name: "华安黄金"
+    symbol_ref: "sh518880"
+    cost_price: 4.500
+    shares: 8000
+
+  - name: "沪深300"
+    symbol_ref: "sh510300"
+    cost_price: 3.500
+    shares: 5000
