@@ -1,0 +1,61 @@
+name: Deploy Finance Bot
+
+on:
+  push:
+    branches: [ "master" ]
+    paths-ignore:   # 忽略不影响运行的文件，避免无意义的构建
+      - 'README.md'
+      - 'finance.md'
+      - '.gitignore'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 1. 传输所有文件到服务器
+      - name: Copy Files to Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # 关键修改：source: "." 代表传输当前目录下所有文件
+          source: "."
+          target: "/root/lh-wx-helper"
+          # 排除 .git 和 .github 文件夹，保持服务器目录清爽
+          exclude: ".git,.github"
+
+      # 2. 远程执行 Docker 构建与重启
+      - name: Build and Restart Docker
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "🚀 Starting Deployment..."
+            
+            # 进入项目目录
+            cd /root/lh-wx-helper
+            
+            # 1. 构建新镜像 (覆盖 latest 标签)
+            echo "🔨 Building Docker Image..."
+            docker build -t lh-wx-helper:latest .
+            
+            # 2. 停止并删除旧容器 (如果存在)
+            echo "🛑 Stopping old container..."
+            docker rm -f lh-wx-helper || true
+            
+            # 3. 启动新容器
+            echo "▶️ Starting new container..."
+            docker run -d \
+              --name my-finance-bot \
+              --restart always \
+              -v $(pwd)/config:/app/config \
+              -e TZ=Asia/Shanghai \
+              lh-wx-helper:latest
+            
+            echo "✅ Deployment Finished. 全量代码同步完成！"
