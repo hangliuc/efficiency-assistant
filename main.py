@@ -4,7 +4,7 @@ import time
 import logging
 import yaml
 import os
-from app.core.notifier import WeComAppNotifier
+from app.core.notifier import WeComNotifier
 from app.modules.finance.monitor import FinanceMonitor
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
@@ -26,16 +26,18 @@ def job_daily_report():
     monitor = FinanceMonitor(config)
     report_content = monitor.run_analysis()
     
-    # 2. 发送通知 (使用应用模式)
+    # 2. 发送通知
     if report_content:
-        # 传入 wecom_app 部分的配置
-        app_config = config['notification']['wecom_app']
-        notifier = WeComAppNotifier(app_config)
+        webhook_config = config['notification']['webhook']
+        notifier = WeComNotifier(webhook_config)
         
-        current_time = time.strftime("%H:%M")
-        full_msg = f"### 📊 持仓监控日报 ({current_time})\n----------------\n{report_content}"
+        current_time = time.strftime("%Y-%m-%d %H:%M:%S")
         
-        notifier.send_markdown(full_msg)
+        # 纯文本消息组合
+        full_msg = f"💷 市场定时推送 ({current_time})\n━━━━━━━━━━━━━━━\n{report_content}"
+        
+        # ⚠️ 注意这里改为 send_text
+        notifier.send_text(full_msg)
     else:
         logging.warning("无报告内容生成")
 
@@ -49,11 +51,11 @@ def run():
         schedule.every().day.at(t).do(job_daily_report)
         logging.info(f"⏰ 已设定任务: {t}")
 
-    # --- 启动时立即测试一次 ---
-    logging.info("🚀 系统启动，正在测试应用消息推送...")
+    # --- 启动测试 ---
+    logging.info("🚀 系统启动，正在测试 Webhook 推送...")
     job_daily_report()
-    logging.info("✅ 测试运行结束，请检查企业微信应用通知。")
-    # -----------------------
+    logging.info("✅ 测试运行结束。")
+    # ---------------
 
     while True:
         schedule.run_pending()

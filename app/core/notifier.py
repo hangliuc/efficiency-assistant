@@ -2,58 +2,36 @@
 import requests
 import logging
 
-class WeComAppNotifier:
+class WeComNotifier:
     def __init__(self, config):
-        """
-        初始化应用通知器
-        config: 包含 corpid, corpsecret, agentid, touser
-        """
-        self.corpid = config['corpid']
-        self.corpsecret = config['corpsecret']
-        self.agentid = config['agentid']
-        self.touser = config.get('touser', '@all')
-        
-    def _get_token(self):
-        """获取 Access Token"""
-        url = f"https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={self.corpid}&corpsecret={self.corpsecret}"
-        try:
-            resp = requests.get(url, timeout=10)
-            data = resp.json()
-            if data.get('errcode') == 0:
-                return data.get('access_token')
-            else:
-                logging.error(f"获取 Token 失败: {data}")
-                return None
-        except Exception as e:
-            logging.error(f"获取 Token 网络异常: {e}")
-            return None
+        self.webhook_url = config['url']
+        self.mention_list = config.get('mention_list', []) # 获取需要@的人
+        self.headers = {"Content-Type": "application/json"}
 
-    def send_markdown(self, content):
-        """发送 Markdown 消息"""
-        token = self._get_token()
-        if not token:
-            logging.error("无法发送消息：Token 获取失败")
-            return
+    def send_text(self, content):
+        """
+        发送纯文本消息 (普通微信可见)
+        """
+        # 如果有配置 @手机号，拼接到文本末尾
+        if self.mention_list:
+             # 企微机器人 text 模式下，@需要用手机号列表
+             # 这里我们简单粗暴地把内容拼在一起
+             pass 
 
-        send_url = f"https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={token}"
-        
-        payload = {
-            "touser": self.touser,
-            "msgtype": "markdown",
-            "agentid": self.agentid,
-            "markdown": {
-                "content": content
-            },
-            "enable_duplicate_check": 0,
-            "duplicate_check_interval": 1800
+        data = {
+            "msgtype": "text",
+            "text": {
+                "content": content,
+                "mentioned_mobile_list": self.mention_list # 真正实现 @提醒
+            }
         }
-
+        
         try:
-            resp = requests.post(send_url, json=payload, timeout=10)
-            data = resp.json()
-            if data.get('errcode') == 0:
-                logging.info("企业微信(应用)推送成功")
+            resp = requests.post(self.webhook_url, json=data, headers=self.headers, timeout=10)
+            result = resp.json()
+            if result.get('errcode') == 0:
+                logging.info("企业微信推送成功")
             else:
-                logging.error(f"推送失败: {data}")
+                logging.error(f"推送失败: {result}")
         except Exception as e:
-            logging.error(f"推送网络异常: {e}")
+            logging.error(f"网络异常: {e}")

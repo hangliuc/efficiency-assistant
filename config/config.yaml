@@ -1,34 +1,26 @@
 # config/config.yaml
 
 notification:
-  mode: "wecom_app"
+  mode: "webhook"
   
-  wecom_app:
-    corpid: "ww8ad08364d2bc2a41"
+  webhook:
+    url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=56c79598-1731-4892-949b-c8becbf6b93d"
     
-    corpsecret: "lxLdKnrld4MkJK98fVENBRk-jzpM720gXD4UnxERUmI"
-    
-    # 3. 应用 AgentId (应用管理 -> 点击你的应用 -> AgentId)
-    agentid: 1000004
-    
-    # 4. 接收人 (填 "@all" 发给全员，或者填具体的 UserID，多个用 | 分隔)
-    touser: "@all"
+    # 需要 @ 的手机号 (可选，留空则不艾特)
+    mention_list: [] 
 
 schedules:
-  times: ["10:00", "12:00", "14:30"]
+  times: ["10:00", "12:00", "15:30"]
 
 holdings:
   - name: "纳斯达克100"
-    symbol_ref: "sh513100"
-    cost_price: 1.1500
-    shares: 10000
+    symbol_ref: "usNDX"        # 纳指实盘指数
 
-  - name: "华安黄金"
-    symbol_ref: "sh518880"
-    cost_price: 4.500
-    shares: 8000
+  - name: "沪深300指数"
+    symbol_ref: "sh000300"  
 
-  - name: "沪深300"
-    symbol_ref: "sh510300"
-    cost_price: 3.500
-    shares: 5000
+  - name: "恒生科技指数"
+    symbol_ref: "hkHSTECH"
+
+  - name: "红利低波50"
+    symbol_ref: "sh515450"     # 南方标普红利低波50ETF (场内实时)
