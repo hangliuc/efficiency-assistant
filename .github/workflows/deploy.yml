@@ -52,7 +52,7 @@ jobs:
             # 3. 启动新容器
             echo "▶️ Starting new container..."
             docker run -d \
-              --name my-finance-bot \
+              --name lh-wx-helper \
               --restart always \
               -v $(pwd)/config:/app/config \
               -e TZ=Asia/Shanghai \
