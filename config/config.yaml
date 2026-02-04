@@ -29,13 +29,10 @@ holdings:
     symbol_ref: "sh515450"     # 南方标普红利低波50ETF (场内实时)
   
   - name: "黄金ETF"
-    symbol_ref: "sh518880"    
-
-  - name: "天弘中证工业有色金属主题ETF"
-    symbol_ref: "sh017193"    
+    symbol_ref: "sh518880"     
 
 gold_targets:
   - name: "伦敦金 (XAU)"
     code: "hf_XAU"        
-    gold_monitor_interval: 300  # 5分钟检查一次
+    gold_monitor_interval: 5  # 5分钟检查一次
     
