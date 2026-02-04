@@ -34,7 +34,7 @@ def job_daily_report():
         current_time = time.strftime("%Y-%m-%d %H:%M:%S")
         
         # 纯文本消息组合
-        full_msg = f"💷 市场定时推送 ({current_time})\n━━━━━━━━━━━━━━━\n{report_content}"
+        full_msg = f"💷 定时推送 ({current_time})💷 \n━━━━━━━━━━━━━━━\n{report_content}"
         
         # ⚠️ 注意这里改为 send_text
         notifier.send_text(full_msg)

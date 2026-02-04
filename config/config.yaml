@@ -13,14 +13,17 @@ schedules:
   times: ["10:00", "12:00", "15:30"]
 
 holdings:
-  - name: "纳斯达克100"
+  - name: "纳斯达克100 指数"
     symbol_ref: "usNDX"        # 纳指实盘指数
 
-  - name: "沪深300指数"
+  - name: "沪深300 指数"
     symbol_ref: "sh000300"  
 
-  - name: "恒生科技指数"
+  - name: "恒生科技 指数"
     symbol_ref: "hkHSTECH"
 
-  - name: "红利低波50"
+  - name: "红利低波50ETF"
     symbol_ref: "sh515450"     # 南方标普红利低波50ETF (场内实时)
+  
+  - name: "黄金ETF"
+    symbol_ref: "sh518880"     
