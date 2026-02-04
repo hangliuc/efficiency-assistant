@@ -66,7 +66,7 @@ class GoldWatcher:
             
             price, pct = self._get_sina_price(code)
             if price is None or price == 0: 
-                continue
+                logging.warning(f"⚠️ {name}: 价格获取失败")
             else:
                 logging.info(f"🔎 {name}: 当前 {price}, 涨幅 {pct:.2f}%")
 
