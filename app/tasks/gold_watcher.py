@@ -56,7 +56,7 @@ class GoldWatcher:
             return None, 0.0
 
     def run(self):
-        """执行黄金监控"""
+        logging.info("执行 [黄金巡检]...")
         # 1. 每次执行前，先检查一下是不是新的一天
         self._check_date_reset()
 
@@ -80,6 +80,7 @@ class GoldWatcher:
             
             # 只有当等级不为0，且该等级没报过，才报警
             if level != 0 and level not in self.alerted_levels[code]:
+                logging.info(f"🔎 {name}: 当前 {price}, 涨幅 {pct:.2f}% (未触新阈值)")
                 
                 # 计算触发阈值 (用于显示)
                 trigger_val = abs(level * step)
