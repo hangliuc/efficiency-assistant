@@ -31,7 +31,7 @@ class GoldWatcher:
         """内部方法：获取新浪价格"""
         try:
             url = f"http://hq.sinajs.cn/list={code}"
-            resp = requests.get(url, headers=self.headers, timeout=30)
+            resp = requests.get(url, headers=self.headers, timeout=300)
             content = resp.text.strip()
             
             if '="' not in content: return None, 0.0
