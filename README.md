@@ -13,8 +13,6 @@
   -v $(pwd)/config:/app/config \
   lh-wx-helper:v1
    ```
-### 新增黄金机器人
-全天监控黄金涨跌，上海金、伦敦金
 
 ## English
 每日日常交流对话，定时推送

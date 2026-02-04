@@ -8,6 +8,9 @@ notification:
     
     # 需要 @ 的手机号 (可选，留空则不艾特)
     mention_list: [] 
+  
+  gold_webhook:
+    url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=8d9d826a-05f3-4d3d-926b-45bcf581ba9c"
 
 schedules:
   times: ["10:00", "12:00", "15:30"]
@@ -26,4 +29,13 @@ holdings:
     symbol_ref: "sh515450"     # 南方标普红利低波50ETF (场内实时)
   
   - name: "黄金ETF"
-    symbol_ref: "sh518880"     
+    symbol_ref: "sh518880"    
+
+  - name: "天弘中证工业有色金属主题ETF"
+    symbol_ref: "sh017193"    
+
+gold_targets:
+  - name: "伦敦金 (XAU)"
+    code: "hf_XAU"        
+    gold_monitor_interval: 300  # 5分钟检查一次
+    
