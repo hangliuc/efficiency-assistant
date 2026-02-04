@@ -65,7 +65,10 @@ class GoldWatcher:
             code = item['code']
             
             price, pct = self._get_sina_price(code)
-            if price is None or price == 0: continue
+            if price is None or price == 0: 
+                continue
+            else:
+                logging.info(f"🔎 {name}: 当前 {price}, 涨幅 {pct:.2f}%")
 
             if code not in self.alerted_levels:
                 self.alerted_levels[code] = set()
@@ -80,7 +83,6 @@ class GoldWatcher:
             
             # 只有当等级不为0，且该等级没报过，才报警
             if level != 0 and level not in self.alerted_levels[code]:
-                logging.info(f"🔎 {name}: 当前 {price}, 涨幅 {pct:.2f}% (未触新阈值)")
                 
                 # 计算触发阈值 (用于显示)
                 trigger_val = abs(level * step)
