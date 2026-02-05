@@ -14,7 +14,10 @@ notification:
 
 schedules:
   times: ["10:00", "12:00", "15:30"]
-
+  
+# 黄金监控频率 (分钟)
+gold_monitor_interval: 5
+# 持仓列表 (仅供日报使用)
 holdings:
   - name: "纳斯达克100 指数"
     symbol_ref: "usNDX"        # 纳指实盘指数
@@ -31,8 +34,3 @@ holdings:
   - name: "黄金ETF"
     symbol_ref: "sh518880"     
 
-gold_targets:
-  - name: "伦敦金 (XAU)"
-    code: "hf_XAU"        
-    gold_monitor_interval: 5  # 5分钟检查一次
-    

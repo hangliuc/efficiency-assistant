@@ -40,7 +40,7 @@ def run():
         logging.info(f"⏰ 已注册日报任务: {t}")
 
     # 4.2 黄金监控调度
-    interval = config['gold_targets'][0]['gold_monitor_interval']
+    interval = config.get('gold_monitor_interval', 5)
     schedule.every(interval).minutes.do(gold_task.run)
     logging.info(f"🏆 已注册黄金监控: 每 {interval} 分钟检测一次")
 
