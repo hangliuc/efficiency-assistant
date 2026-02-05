@@ -13,10 +13,11 @@ notification:
     url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=8d9d826a-05f3-4d3d-926b-45bcf581ba9c"
 
 schedules:
-  times: ["10:00", "12:00", "15:30"]
-  
+  times: ["12:00", "14:30", "16:00"]
+
 # 黄金监控频率 (分钟)
 gold_monitor_interval: 5
+
 # 持仓列表 (仅供日报使用)
 holdings:
   - name: "纳斯达克100 指数"
