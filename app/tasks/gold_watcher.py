@@ -70,7 +70,7 @@ class GoldWatcher:
         # C. 中间 (-0.49% ~ 0.99%): 即使从高处跌回来，也不报警
         
         level = 0
-        step = 0.5 # 步长依然是 0.5
+        step = 1.0 
 
         if pct >= 1.0:
             # 例如 1.2% -> int(2.4) -> level 2
