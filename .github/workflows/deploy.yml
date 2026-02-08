@@ -27,7 +27,7 @@ jobs:
           # --exclude='venv/': 排除虚拟环境
           ARGS: "-avzr --delete  --exclude='.git/'"
           SOURCE: "."
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_HOST: ${{ secrets.SERVER_HOST }}
           REMOTE_USER: "root"
           TARGET: "/root/lh-wx-helper/" 
 
